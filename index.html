@@ -900,6 +900,42 @@ function updateProgress(type) {
   document.getElementById(cfg.progressText).textContent = `${count} / ${cfg.total} 題`;
 }
 
+const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycby6ni-DWDU2VvfGHX50Run-uCMHt7HjDJXGyQ_XpcyCGeo3QLwcl3t64Az3t7NhSMe2RQ/exec';
+
+function getVal(name) {
+  const radios = document.querySelectorAll(`input[name="${name}"]:checked`);
+  if (radios.length === 0) return '';
+  return Array.from(radios).map(r => r.closest('.opt-label').textContent.trim()).join('、');
+}
+
+function collectData(type) {
+  if (type === 'donor') {
+    return {
+      identity: '捐款人',
+      q1: getVal('d1'), q2: getVal('d2'),
+      q3: scaleVals['d3'] || '',
+      q4: getVal('d4'), q5: getVal('d5'), q6: getVal('d6'), q7: getVal('d7'),
+      q8: scaleVals['d8'] || '',
+      q9: getVal('d9'),
+      q10: scaleVals['d10'] || '',
+      q11: document.querySelector('textarea[name="d11"]').value,
+      q12: '', q13: ''
+    };
+  } else {
+    return {
+      identity: '管理者',
+      q1: getVal('a1'), q2: getVal('a2'),
+      q3: scaleVals['a3'] || '',
+      q4: getVal('a4'), q5: getVal('a5'),
+      q6: scaleVals['a6'] || '',
+      q7: getVal('a7'), q8: getVal('a8'), q9: getVal('a9'),
+      q10: getVal('a10'), q11: getVal('a11'),
+      q12: document.querySelector('textarea[name="a12"]').value,
+      q13: ''
+    };
+  }
+}
+
 function submitSurvey(type) {
   const cfg = config[type];
   let missing = false;
@@ -923,9 +959,29 @@ function submitSurvey(type) {
     return;
   }
 
-  document.getElementById(type === 'donor' ? 'donorSurvey' : 'adminSurvey').classList.remove('active');
-  document.getElementById('thankyou').classList.add('show');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  // 顯示送出中狀態
+  const btn = document.querySelector(`#${type === 'donor' ? 'donorSurvey' : 'adminSurvey'} .btn-submit`);
+  btn.textContent = '送出中…';
+  btn.disabled = true;
+
+  const data = collectData(type);
+
+  fetch(WEB_APP_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  })
+  .then(() => {
+    document.getElementById(type === 'donor' ? 'donorSurvey' : 'adminSurvey').classList.remove('active');
+    document.getElementById('thankyou').classList.add('show');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  })
+  .catch(() => {
+    alert('送出時發生問題，請稍後再試。');
+    btn.textContent = '提交問卷 Submit';
+    btn.disabled = false;
+  });
 }
 </script>
 </body>
