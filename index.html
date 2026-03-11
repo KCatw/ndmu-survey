@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>國防醫學大學捐款網站｜使用意見問卷</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@300;400;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Sans+TC:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0f1f3d;
+  --navy-mid: #1a3260;
+  --gold: #b8913a;
+  --gold-light: #d4aa5a;
+  --gold-pale: #f0e0b0;
+  --cream: #faf8f3;
+  --warm: #f2ede0;
+  --muted: #7a7060;
+  --line: rgba(184,145,58,0.2);
+  --white: #ffffff;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Noto Sans TC', sans-serif;
+  background: var(--cream);
+  color: var(--navy);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── Background ── */
+.bg-layer {
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+}
+.bg-layer::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 70% 50% at 15% 0%, rgba(184,145,58,0.08) 0%, transparent 55%),
+    radial-gradient(ellipse 60% 70% at 90% 100%, rgba(15,31,61,0.06) 0%, transparent 55%);
+}
+.bg-layer::after {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 56px 56px;
+  opacity: 0.35;
+}
+
+/* ── Layout ── */
+.wrapper {
+  position: relative; z-index: 1;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 64px 24px 120px;
+}
+
+/* ── Header ── */
+.site-header {
+  text-align: center;
+  margin-bottom: 56px;
+  animation: fadeDown 0.7s ease both;
+}
+.badge {
+  display: inline-block;
+  font-family: 'Noto Serif TC', serif;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.3em;
+  color: var(--gold);
+  border: 1px solid var(--gold);
+  padding: 5px 18px;
+  margin-bottom: 24px;
+}
+.site-header h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(28px, 5vw, 46px);
+  font-weight: 300;
+  color: var(--navy);
+  letter-spacing: 0.05em;
+  line-height: 1.15;
+  margin-bottom: 8px;
+}
+.site-header h2 {
+  font-family: 'Noto Serif TC', serif;
+  font-size: clamp(16px, 2.5vw, 20px);
+  font-weight: 300;
+  color: var(--navy-mid);
+  letter-spacing: 0.1em;
+  margin-bottom: 20px;
+}
+.ornament {
+  display: flex; align-items: center; gap: 14px;
+  max-width: 240px; margin: 0 auto 20px;
+}
+.ornament::before, .ornament::after {
+  content: ''; flex: 1; height: 1px; background: var(--gold); opacity: 0.5;
+}
+.ornament span { color: var(--gold); font-size: 16px; }
+.site-header p {
+  font-size: 14px; color: var(--muted); line-height: 1.9;
+  max-width: 500px; margin: 0 auto;
+}
+
+/* ── Identity Selection ── */
+.identity-screen {
+  animation: fadeUp 0.6s ease both;
+}
+.identity-title {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 15px; font-weight: 600;
+  color: var(--navy); text-align: center;
+  margin-bottom: 32px;
+  letter-spacing: 0.05em;
+}
+
+.identity-cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.id-card {
+  background: var(--white);
+  border: 1.5px solid var(--line);
+  border-radius: 4px;
+  padding: 36px 28px;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.id-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light));
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+.id-card:hover {
+  border-color: var(--gold);
+  box-shadow: 0 8px 32px rgba(184,145,58,0.12);
+  transform: translateY(-4px);
+}
+.id-card:hover::before { transform: scaleX(1); }
+.id-icon {
+  font-size: 36px;
+  margin-bottom: 16px;
+  display: block;
+}
+.id-card h3 {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 17px; font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 10px;
+}
+.id-card p {
+  font-size: 12px; color: var(--muted);
+  line-height: 1.7;
+}
+
+/* ── Survey Form ── */
+.survey-screen { display: none; }
+.survey-screen.active { display: block; animation: fadeUp 0.5s ease both; }
+
+/* Progress */
+.progress-wrap {
+  margin-bottom: 44px;
+}
+.progress-meta {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 10px;
+}
+.progress-identity {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 12px; color: var(--gold);
+  font-family: 'Noto Serif TC', serif;
+  letter-spacing: 0.1em;
+}
+.progress-identity .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--gold);
+}
+.progress-count {
+  font-size: 12px; color: var(--muted);
+  letter-spacing: 0.05em;
+}
+.progress-track {
+  background: var(--warm);
+  border: 1px solid var(--line);
+  height: 3px; border-radius: 2px; overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light));
+  border-radius: 2px;
+  transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+  width: 0%;
+}
+
+/* Back button */
+.btn-back {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 12px; color: var(--muted);
+  cursor: pointer; margin-bottom: 36px;
+  background: none; border: none;
+  letter-spacing: 0.05em;
+  transition: color 0.2s;
+}
+.btn-back:hover { color: var(--gold); }
+
+/* Section */
+.section-label {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 10px; font-weight: 600;
+  letter-spacing: 0.25em;
+  color: var(--gold);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  margin-top: 36px;
+  padding-top: 28px;
+  border-top: 1px solid var(--line);
+}
+.section-label:first-of-type { border-top: none; margin-top: 0; padding-top: 0; }
+
+/* Q Card */
+.q-card {
+  background: rgba(255,255,255,0.9);
+  border: 1px solid rgba(184,145,58,0.15);
+  border-radius: 3px;
+  padding: 26px 30px;
+  margin-bottom: 14px;
+  backdrop-filter: blur(8px);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.q-card:hover {
+  border-color: rgba(184,145,58,0.3);
+  box-shadow: 0 4px 20px rgba(184,145,58,0.07);
+}
+.q-card.answered {
+  border-left: 3px solid var(--gold);
+}
+.q-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 12px; color: var(--gold);
+  letter-spacing: 0.15em;
+  margin-bottom: 8px;
+}
+.q-text {
+  font-family: 'Noto Serif TC', serif;
+  font-size: 15px; font-weight: 400;
+  color: var(--navy); line-height: 1.75;
+  margin-bottom: 18px;
+}
+.q-required { color: #b03030; font-size: 12px; margin-left: 3px; }
+.q-hint {
+  font-size: 12px; color: var(--muted);
+  display: block; margin-top: 4px; font-weight: 300;
+}
+
+/* Options */
+.options { display: flex; flex-direction: column; gap: 8px; }
+.opt-label {
+  display: flex; align-items: flex-start; gap: 12px;
+  padding: 10px 14px;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  cursor: pointer;
+  font-size: 14px; color: var(--navy);
+  line-height: 1.6;
+  transition: background 0.2s, border-color 0.2s;
+}
+.opt-label:hover { background: rgba(184,145,58,0.05); border-color: var(--line); }
+.opt-label.selected { background: rgba(184,145,58,0.07); border-color: rgba(184,145,58,0.3); }
+
+.opt-label input[type="radio"],
+.opt-label input[type="checkbox"] {
+  appearance: none;
+  width: 17px; height: 17px; min-width: 17px;
+  border: 1.5px solid #bbb;
+  border-radius: 50%;
+  margin-top: 2px;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  position: relative;
+}
+.opt-label input[type="checkbox"] { border-radius: 2px; }
+.opt-label input:checked { border-color: var(--gold); background: var(--gold); }
+.opt-label input[type="radio"]:checked::after {
+  content: '';
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  width: 6px; height: 6px;
+  background: white; border-radius: 50%;
+}
+.opt-label input[type="checkbox"]:checked::after {
+  content: '✓';
+  position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 10px; color: white; font-weight: bold;
+}
+
+/* Scale */
+.scale-labels {
+  display: flex; justify-content: space-between;
+  font-size: 11px; color: var(--muted);
+  margin-bottom: 10px;
+}
+.scale-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+.scale-btn {
+  width: 44px; height: 44px;
+  border: 1.5px solid #ccc;
+  background: white; border-radius: 2px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px;
+  cursor: pointer; color: var(--muted);
+  transition: all 0.2s;
+}
+.scale-btn:hover { border-color: var(--gold); color: var(--gold); }
+.scale-btn.active { background: var(--gold); border-color: var(--gold); color: white; }
+
+/* Textarea */
+textarea {
+  width: 100%; padding: 14px 16px;
+  border: 1.5px solid rgba(184,145,58,0.2);
+  border-radius: 2px;
+  font-family: 'Noto Sans TC', sans-serif;
+  font-size: 14px; color: var(--navy);
+  background: white; resize: vertical;
+  min-height: 100px; line-height: 1.75;
+  transition: border-color 0.3s; outline: none;
+}
+textarea:focus { border-color: var(--gold); }
+
+/* Submit */
+.submit-area {
+  text-align: center;
+  margin-top: 52px;
+  padding-top: 48px;
+  border-top: 1px solid var(--line);
+}
+.submit-note {
+  font-size: 13px; color: var(--muted);
+  line-height: 1.9; margin-bottom: 28px;
+}
+.btn-submit {
+  display: inline-block;
+  padding: 15px 60px;
+  background: var(--navy);
+  color: var(--gold-light);
+  font-family: 'Noto Serif TC', serif;
+  font-size: 14px; letter-spacing: 0.2em;
+  border: none; cursor: pointer; border-radius: 2px;
+  transition: background 0.3s, transform 0.2s;
+}
+.btn-submit:hover {
+  background: var(--gold);
+  color: var(--navy);
+  transform: translateY(-2px);
+}
+
+/* Thank you */
+.thankyou {
+  display: none; text-align: center;
+  padding: 80px 40px;
+}
+.thankyou.show { display: block; animation: fadeUp 0.6s ease both; }
+.ty-icon { font-size: 52px; margin-bottom: 28px; display: block; }
+.thankyou h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 36px; font-weight: 300;
+  color: var(--navy); margin-bottom: 16px;
+}
+.thankyou p {
+  font-size: 15px; color: var(--muted);
+  line-height: 2; max-width: 440px; margin: 0 auto;
+}
+
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 560px) {
+  .identity-cards { grid-template-columns: 1fr; }
+  .q-card { padding: 18px 16px; }
+  .scale-btn { width: 38px; height: 38px; font-size: 14px; }
+}
+</style>
+</head>
+<body>
+<div class="bg-layer"></div>
+<div class="wrapper">
+
+  <!-- ── Header ── -->
+  <div class="site-header">
+    <div class="badge">Opinion Survey · 使用意見問卷</div>
+    <h2>國防醫學大學</h2>
+    <h1>捐款網站</h1>
+    <div class="ornament"><span>✦</span></div>
+    <p>感謝您使用本捐款網站。<br>請先選擇您的身份，我們將為您顯示最適合的問題，協助我們持續優化您的使用體驗。</p>
+  </div>
+
+  <!-- ── Identity Selection ── -->
+  <div class="identity-screen" id="identityScreen">
+    <div class="identity-title">請選擇您的身份</div>
+    <div class="identity-cards">
+      <div class="id-card" onclick="startSurvey('donor')">
+        <span class="id-icon">🤲</span>
+        <h3>捐款人</h3>
+        <p>曾在本網站進行捐款，希望分享使用體驗與建議</p>
+      </div>
+      <div class="id-card" onclick="startSurvey('admin')">
+        <span class="id-icon">⚙️</span>
+        <h3>網站管理者</h3>
+        <p>負責管理本平台內容、活動或帳務的共同管理者</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       DONOR SURVEY
+  ══════════════════════════════════════ -->
+  <div class="survey-screen" id="donorSurvey">
+    <button class="btn-back" onclick="goBack()">← 重新選擇身份</button>
+
+    <div class="progress-wrap">
+      <div class="progress-meta">
+        <div class="progress-identity"><div class="dot"></div>捐款人問卷</div>
+        <div class="progress-count" id="donorProgressText">0 / 11 題</div>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="donorProgressBar"></div>
+      </div>
+    </div>
+
+    <!-- Section 壹 -->
+    <div class="section-label">壹・基本背景</div>
+
+    <div class="q-card" id="d-card-1">
+      <div class="q-num">Q 01</div>
+      <div class="q-text">您是透過什麼方式得知本捐款網站的？<span class="q-required">*</span></div>
+      <div class="options">
+        <label class="opt-label"><input type="radio" name="d1" value="1"> 醫院官網或公告</label>
+        <label class="opt-label"><input type="radio" name="d1" value="2"> 親友介紹</label>
+        <label class="opt-label"><input type="radio" name="d1" value="3"> 社群媒體（Facebook、LINE 等）</label>
+        <label class="opt-label"><input type="radio" name="d1" value="4"> 醫護人員告知</label>
+        <label class="opt-label"><input type="radio" name="d1" value="5"> 搜尋引擎</label>
+        <label class="opt-label"><input type="radio" name="d1" value="6"> 其他</label>
+      </div>
+    </div>
+
+    <div class="q-card" id="d-card-2">
+      <div class="q-num">Q 02</div>
+      <div class="q-text">您在本網站的捐款次數大約是？<span class="q-required">*</span></div>
+      <div class="options">
+        <label class="opt-label"><input type="radio" name="d2" value="1"> 這是第一次</label>
+        <label class="opt-label"><input type="radio" name="d2" value="2"> 2–3 次</label>
+        <label class="opt-label"><input type="radio" name="d2" value="3"> 4 次以上</label>
+        <label class="opt-label"><input type="radio" name="d2" value="4"> 目前尚未完成捐款，只是瀏覽</label>
+      </div>
+    </div>
+
+    <!-- Section 貳 -->
+    <div class="section-label">貳・網站使用體驗</div>
+
+    <div class="q-card" id="d-card-3">
+      <div class="q-num">Q 03</div>
+      <div class="q-text">整體而言，您對網站的操作便利性評分為？<span class="q-required">*</span>
+        <span class="q-hint">（1 = 非常不便利，5 = 非常便利）</span>
+      </div>
+      <div class="scale-labels"><span>非常不便利</span><span>非常便利</span></div>
+      <div class="scale-btns" id="d-scale-3">
+        <button type="button" class="scale-btn" data-scale="d3" data-v="1">1</button>
+        <button type="button" class="scale-btn" data-scale="d3" data-v="2">2</button>
+        <button type="button" class="scale-btn" data-scale="d3" data-v="3">3</button>
+        <button type="button" class="scale-btn" data-scale="d3" data-v="4">4</button>
+        <button type="button" class="scale-btn" data-scale="d3" data-v="5">5</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="d-card-4">
+      <div class="q-num">Q 04</div>
+      <div class="q-text">您在瀏覽網站時是否能輕易找到您想捐款的項目或活動？<span class="q-required">*</span></div>
+      <div class="options">
+        <label class="opt-label"><input type="radio" name="d4" value="1"> 非常容易找到</label>
+        <label class="opt-label"><input type="radio" name="d4" value="2"> 大致能找到，但需要一些時間</label>
+        <label class="opt-label"><input type="radio" name="d4" value="3"> 有些困難，資訊不夠清楚</label>
+        <label class="opt-label"><input type="radio" name="d4" value="4"> 很難找到，頁面結構混亂</label>
+      </div>
+    </div>
+
+    <div class="q-card" id="d-card-5">
+      <div class="q-num">Q 05</div>
+      <div class="q-text">您在捐款過程中是否遇到任何困難？（可複選）<span class="q-required">*</span></div>
+      <div class="options">
+        <label class="opt-label"><input type="checkbox" name="d5" value="1"> 付款方式不夠多元</label>
+        <label class="opt-label"><input type="checkbox" name="d5" value="2"> 捐款流程步驟太多或過於複雜</label>
+        <label class="opt-label"><input type="checkbox" name="d5" value="3"> 網頁在手機上顯示不正常</label>
+        <label class="opt-label"><input type="checkbox" name="d5" value="4"> 找不到想捐款的特定項目</label>
+        <label class="opt-label"><input type="checkbox" name="d5" value="5"> 收據或確認信未收到</label>
+        <label class="opt-label"><input type="checkbox" name="d5" value="6"> 網頁載入速度太慢</label>
+        <label class="opt-label"><input type="checkbox" name="d5" value="7"> 沒有遇到困難，過程順暢</label>
+      </div>
+    </div>
+
+    <div class="q-card" id="d-card-6">
+      <div class="q-num">Q 06</div>
+      <div class="q-text">您主要使用什麼裝置瀏覽本網站？<span class="q-required">*</span></div>
+      <div class="options">
+        <label class="opt-label"><input type="radio" name="d6" value="1"> 桌上型電腦或筆電</label>
+        <label class="opt-label"><input type="radio" name="d6" value="2"> 手機</label>
+        <label class="opt-label"><input type="radio" name="d6" value="3"> 平板</label>
+        <label class="opt-label"><input type="radio" name="d6" value="4"> 各種裝置都有使用</label>
+      </div>
+    </div>
+
+    <!-- Section 參 -->
+    <div class="section-label">參・資訊透明與信任感</div>
+
+    <div class="q-card" id="d-card-7">
+      <div class="q-num">Q 07</div>
+      <div class="q-text">網站是否清楚說明捐款用途與資金流向？<span class="q-required">*</span></div>
+      <div class="options">
+        <label class="opt-label"><input type="radio" name="d7" value="1"> 非常清楚，讓我很放心</label>
+        <label class="opt-label"><input type="radio" name="d7" value="2"> 尚可，但仍希望更詳細</label>
+        <label class="opt-label"><input type="radio" name="d7" value="3"> 資訊不足，讓我有些疑慮</label>
+        <label class="opt-label"><input type="radio" name="d7" value="4"> 幾乎沒有說明</label>
+      </div>
+    </div>
+
+    <div class="q-card" id="d-card-8">
+      <div class="q-num">Q 08</div>
+      <div class="q-text">您對本網站的整體信任度評分為？<span class="q-required">*</span>
+        <span class="q-hint">（1 = 完全不信任，5 = 非常信任）</span>
+      </div>
+      <div class="scale-labels"><span>完全不信任</span><span>非常信任</span></div>
+      <div class="scale-btns" id="d-scale-8">
+        <button type="button" class="scale-btn" data-scale="d8" data-v="1">1</button>
+        <button type="button" class="scale-btn" data-scale="d8" data-v="2">2</button>
+        <button type="button" class="scale-btn" data-scale="d8" data-v="3">3</button>
+        <button type="button" class="scale-btn" data-scale="d8" data-v="4">4</button>
+        <button type="button" class="scale-btn" data-scale="d8" data-v="5">5</button>
+      </div>
+    </div>
+
+    <!-- Section 肆 -->
+    <div class="section-label">肆・改善建議</div>
+
+    <div class="q-card" id="d-card-9">
+      <div class="q-num">Q 09</div>
+      <div class="q-text">您最希望網站改善哪個面向？（請選最重要的一項）<span class="q-required">*</span></div>
+      <div class="options">
+        <label class="opt-label"><input type="radio" name="d9" value="1"> 捐款流程更簡化</label>
+        <label class="opt-label"><input type="radio" name="d9" value="2"> 手機版介面優化</label>
+        <label class="opt-label"><input type="radio" name="d9" value="3"> 更多元的付款方式</label>
+        <label class="opt-label"><input type="radio" name="d9" value="4"> 更清楚的捐款用途說明</label>
+        <label class="opt-label"><input type="radio" name="d9" value="5"> 捐款後的成果回報（如感謝信、使用報告）</label>
+        <label class="opt-label"><input type="radio" name="d9" value="6"> 電子收據與稅務證明取得更方便</label>
+      </div>
+    </div>
+
+    <div class="q-card" id="d-card-10">
+      <div class="q-num">Q 10</div>
+      <div class="q-text">您是否願意將本網站推薦給親友？<span class="q-required">*</span>
+        <span class="q-hint">（1 = 絕對不會，5 = 非常樂意）</span>
+      </div>
+      <div class="scale-labels"><span>絕對不會</span><span>非常樂意</span></div>
+      <div class="scale-btns" id="d-scale-10">
+        <button type="button" class="scale-btn" data-scale="d10" data-v="1">1</button>
+        <button type="button" class="scale-btn" data-scale="d10" data-v="2">2</button>
+        <button type="button" class="scale-btn" data-scale="d10" data-v="3">3</button>
+        <button type="button" class="scale-btn" data-scale="d10" data-v="4">4</button>
+        <button type="button" class="scale-btn" data-scale="d10" data-v="5">5</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="d-card-11">
+      <div class="q-num">Q 11</div>
+      <div class="q-text">請分享您對網站的任何建議或使用心得：</div>
+      <textarea name="d11" placeholder="例如：操作上的困難、希望看到的功能、整體印象……" rows="5"></textarea>
+    </div>
+
+    <div class="submit-area">
+      <p class="submit-note">感謝您撥冗分享寶貴意見。<br>您的每一項回饋都將幫助我們打造更友善的捐款環境。</p>
+      <button class="btn-submit" onclick="submitSurvey('donor')">提交問卷 Submit</button>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════
+       ADMIN SURVEY
+  ══════════════════════════════════════ -->
+  <div class="survey-screen" id="adminSurvey">
+    <button class="btn-back" onclick="goBack()">← 重新選擇身份</button>
+
+    <div class="progress-wrap">
+      <div class="progress-meta">
+        <div class="progress-identity"><div class="dot"></div>管理者問卷</div>
+        <div class="progress-count" id="adminProgressText">0 / 12 題</div>
+      </div>
+      <div class="progress-track">
+        <div class="progress-fill" id="adminProgressBar"></div>
+      </div>
+    </div>
+
+    <!-- Section 壹 -->
+    <div class="section-label">壹・基本資訊</div>
+
+    <div class="q-card" id="a-card-1">
+      <div class="q-num">Q 01</div>
+      <div class="q-text">您在平台中主要擔任的管理角色為何？<span class="q-required">*</span></div>
+      <div class="options">
+        <label class="opt-label"><input type="radio" name="a1" value="1"> 主要管理者（負責全站內容與帳務）</label>
+        <label class="opt-label"><input type="radio" name="a1" value="2"> 活動／專案管理者（負責特定募款活動）</label>
+        <label class="opt-label"><input type="radio" name="a1" value="3"> 內容編輯者（負責文案與圖片更新）</label>
+        <label class="opt-label"><input type="radio" name="a1" value="4"> 財務／報表管理者</label>
+        <label class="opt-label"><input type="radio" name="a1" value="5"> 其他</label>
+      </div>
+    </div>
+
+    <div class="q-card" id="a-card-2">
+      <div class="q-num">Q 02</div>
+      <div class="q-text">您使用此平台管理功能的頻率大約是？<span class="q-required">*</span></div>
+      <div class="options">
+        <label class="opt-label"><input type="radio" name="a2" value="1"> 每天使用</label>
+        <label class="opt-label"><input type="radio" name="a2" value="2"> 每週數次</label>
+        <label class="opt-label"><input type="radio" name="a2" value="3"> 每月數次</label>
+        <label class="opt-label"><input type="radio" name="a2" value="4"> 有需要時才使用</label>
+      </div>
+    </div>
+
+    <!-- Section 貳 -->
+    <div class="section-label">貳・功能使用評估</div>
+
+    <div class="q-card" id="a-card-3">
+      <div class="q-num">Q 03</div>
+      <div class="q-text">整體而言，您對目前平台後台的操作便利性評分為？<span class="q-required">*</span>
+        <span class="q-hint">（1 = 非常不便利，5 = 非常便利）</span>
+      </div>
+      <div class="scale-labels"><span>非常不便利</span><span>非常便利</span></div>
+      <div class="scale-btns" id="a-scale-3">
+        <button type="button" class="scale-btn" data-scale="a3" data-v="1">1</button>
+        <button type="button" class="scale-btn" data-scale="a3" data-v="2">2</button>
+        <button type="button" class="scale-btn" data-scale="a3" data-v="3">3</button>
+        <button type="button" class="scale-btn" data-scale="a3" data-v="4">4</button>
+        <button type="button" class="scale-btn" data-scale="a3" data-v="5">5</button>
+      </div>
+    </div>
+
+    <div class="q-card" id="a-card-4">
+      <div class="q-num">Q 04</div>
+      <div class="q-text">以下哪些功能您最常使用？（可複選）<span class="q-required">*</span></div>
+      <div class="options">
+        <label class="opt-label"><input type="checkbox" name="a4" value="1"> 新增／編輯募款活動</label>
+        <label class="opt-label"><input type="checkbox" name="a4" value="2"> 捐款記錄查詢與匯出</label>
+        <label class="opt-label"><input type="checkbox" name="a4" value="3"> 捐款人資料管理</label>
+        <label class="opt-label"><input type="checkbox" name="a4" value="4"> 收據／感謝信發送</label>
+        <label class="opt-label"><input type="checkbox" name="a4" value="5"> 統計報表與圖表</label>
+        <label class="opt-label"><input type="checkbox" name="a4" value="6"> 帳號與權限設定</label>
+        <label class="opt-label"><input type="checkbox" name="a4" value="7"> 首頁／網站內容編輯</label>
+      </div>
+    </div>
+
+    <div class="q-card" id="a-card-5">
+      <div class="q-num">Q 05</div>
+      <div class="q-text">您在使用平台時，最常遇到的困難或問題為何？（可複選）<span class="q-required">*</span></div>
+      <div class="options">
+        <label class="opt-label"><input type="checkbox" name="a5" value="1"> 介面操作不直覺，需要摸索</label>
+        <label class="opt-label"><input type="checkbox" name="a5" value="2"> 資料搜尋與篩選功能不足</label>
+        <label class="opt-label"><input type="checkbox" name="a5" value="3"> 報表匯出格式不符需求</label>
+        <label class="opt-label"><input type="checkbox" name="a5" value="4"> 系統載入速度慢</label>
+        <label class="opt-label"><input type="checkbox" name="a5" value="5"> 在行動裝置上操作不便</label>
+        <label class="opt-label"><input type="checkbox" name="a5" value="6"> 權限設定不夠彈性</label>
+        <label class="opt-label"><input type="checkbox" name="a5" value="7"> 缺乏操作說明或教學文件</label>
+        <label class="opt-label"><input type="checkbox" name="a5" value="8"> 目前使用上沒有明顯問題</label>
+      </div>
+    </div>
+
+    <div class="q-card" id="a-card-6">
+      <div class="q-num">Q 06</div>
+      <div class="q-text">您對目前捐款記錄的查詢與匯出功能滿意度為？<span class="q-required">*</span>
+        <span class="q-hint">（1 = 非常不滿意，5 = 非常滿意）</span>
+      </div>
+      <div class="scale-labels"><span>非常不滿意</span><span>非常滿意</span></div>
+      <div class="scale-btns" id="a-scale-6">
+        <button type="button" class="scale-btn" data-scale="a6" data-v="1">1</button>
+        <button type="button" class="scale-btn" data-scale="a6" data-v="2">2</button>
+        <button type="button" class="scale-btn" data-scale="a6" data-v="3">3</button>
+        <button type="button" class="scale-btn" data-scale="a6" data-v="4">4</button>
+        <button type="button" class="scale-btn" data-scale="a6" data-v="5">5</button>
+      </div>
+    </div>
+
+    <!-- Section 參 -->
+    <div class="section-label">參・改善需求與建議</div>
+
+    <div class="q-card" id="a-card-7">
+      <div class="q-num">Q 07</div>
+      <div class="q-text">您最希望優先改善的功能面向為何？（請選最重要的一項）<span class="q-required">*</span></div>
+      <div class="options">
+        <label class="opt-label"><input type="radio" name="a7" value="1"> 後台操作介面的易用性</label>
+        <label class="opt-label"><input type="radio" name="a7" value="2"> 資料查詢、篩選與匯出功能</label>
+        <label class="opt-label"><input type="radio" name="a7" value="3"> 報表統計分析與視覺化</label>
+        <label class="opt-label"><input type="radio" name="a7" value="4"> 多人管理與權限分層機制</label>
+        <label class="opt-label"><input type="radio" name="a7" value="5"> 行動裝置適配（Mobile 版後台）</label>
+        <label class="opt-label"><input type="radio" name="a7" value="6"> 自動化通知與提醒（如捐款通知、收據寄送）</label>
+      </div>
+    </div>
+
+    <div class="q-card" id="a-card-8">
+      <div class="q-num">Q 08</div>
+      <div class="q-text">目前的報表或統計功能是否能滿足您的工作需求？<span class="q-required">*</span></div>
+      <div class="options">
+        <label class="opt-label"><input type="radio" name="a8" value="1"> 完全能滿足</label>
+        <label class="opt-label"><input type="radio" name="a8" value="2"> 大致能滿足，但有些不足</label>
+        <label class="opt-label"><input type="radio" name="a8" value="3"> 只能滿足部分需求</label>
+        <label class="opt-label"><input type="radio" name="a8" value="4"> 無法滿足，需要大幅改善</label>
+      </div>
+    </div>
+
+    <div class="q-card" id="a-card-9">
+      <div class="q-num">Q 09</div>
+      <div class="q-text">您是否有使用其他工具輔助管理捐款資料？<span class="q-required">*</span></div>
+      <div class="options">
+        <label class="opt-label"><input type="radio" name="a9" value="1"> 沒有，僅使用本平台</label>
+        <label class="opt-label"><input type="radio" name="a9" value="2"> 有，使用 Excel / Google Sheets 補充記錄</label>
+        <label class="opt-label"><input type="radio" name="a9" value="3"> 有，使用其他捐款管理系統</label>
+        <label class="opt-label"><input type="radio" name="a9" value="4"> 有，使用其他方式（如紙本）</label>
+      </div>
+    </div>
+
+    <!-- Section 肆 -->
+    <div class="section-label">肆・管理協作與支援</div>
+
+    <div class="q-card" id="a-card-10">
+      <div class="q-num">Q 10</div>
+      <div class="q-text">多人共同管理時，您是否遭遇過權限衝突或溝通不順暢的情況？<span class="q-required">*</span></div>
+      <div class="options">
+        <label class="opt-label"><input type="radio" name="a10" value="1"> 從未遭遇</label>
+        <label class="opt-label"><input type="radio" name="a10" value="2"> 偶爾遭遇，但影響不大</label>
+        <label class="opt-label"><input type="radio" name="a10" value="3"> 有遭遇，且造成一定困擾</label>
+        <label class="opt-label"><input type="radio" name="a10" value="4"> 經常遭遇，需要改善機制</label>
+      </div>
+    </div>
+
+    <div class="q-card" id="a-card-11">
+      <div class="q-num">Q 11</div>
+      <div class="q-text">當您在使用平台時遇到問題，目前的支援管道是否能有效協助您？<span class="q-required">*</span></div>
+      <div class="options">
+        <label class="opt-label"><input type="radio" name="a11" value="1"> 能有效且及時地獲得協助</label>
+        <label class="opt-label"><input type="radio" name="a11" value="2"> 可以獲得協助，但回應速度偏慢</label>
+        <label class="opt-label"><input type="radio" name="a11" value="3"> 很難獲得有效的協助</label>
+        <label class="opt-label"><input type="radio" name="a11" value="4"> 不清楚支援管道為何</label>
+      </div>
+    </div>
+
+    <!-- Section 伍 -->
+    <div class="section-label">伍・開放建議</div>
+
+    <div class="q-card" id="a-card-12">
+      <div class="q-num">Q 12</div>
+      <div class="q-text">請分享您對平台最重要的改善建議，或任何希望開發團隊了解的問題與需求：</div>
+      <textarea name="a12" placeholder="例如：特定功能需求、操作上的痛點、希望改善的流程……" rows="5"></textarea>
+    </div>
+
+    <div class="submit-area">
+      <p class="submit-note">感謝您撥冗填寫本問卷。<br>您的每一項建議都將成為我們改善平台的重要依據。</p>
+      <button class="btn-submit" onclick="submitSurvey('admin')">提交問卷 Submit</button>
+    </div>
+  </div>
+
+  <!-- ── Thank You ── -->
+  <div class="thankyou" id="thankyou">
+    <span class="ty-icon">✦</span>
+    <h2>感謝您的回饋</h2>
+    <p>您的寶貴意見已成功送出。<br>我們將認真研讀每一份回覆，持續優化捐款網站的使用體驗。<br><br>感謝您對國防醫學大學的支持與關注。</p>
+  </div>
+
+</div>
+
+<script>
+let currentSurvey = null;
+const answered = { donor: new Set(), admin: new Set() };
+const scaleVals = {};
+
+const config = {
+  donor: {
+    total: 11,
+    required: ['d1','d2','d3','d4','d5','d6','d7','d8','d9','d10'],
+    scaleMap: { d3: 'd-card-3', d8: 'd-card-8', d10: 'd-card-10' },
+    radioCheckMap: n => `d-card-${n.replace('d','')}`,
+    textareaName: 'd11',
+    textareaCard: 'd-card-11',
+    progressBar: 'donorProgressBar',
+    progressText: 'donorProgressText',
+  },
+  admin: {
+    total: 12,
+    required: ['a1','a2','a3','a4','a5','a6','a7','a8','a9','a10','a11'],
+    scaleMap: { a3: 'a-card-3', a6: 'a-card-6' },
+    radioCheckMap: n => `a-card-${n.replace('a','')}`,
+    textareaName: 'a12',
+    textareaCard: 'a-card-12',
+    progressBar: 'adminProgressBar',
+    progressText: 'adminProgressText',
+  }
+};
+
+function startSurvey(type) {
+  currentSurvey = type;
+  document.getElementById('identityScreen').style.display = 'none';
+  document.getElementById(type === 'donor' ? 'donorSurvey' : 'adminSurvey').classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function goBack() {
+  document.getElementById('donorSurvey').classList.remove('active');
+  document.getElementById('adminSurvey').classList.remove('active');
+  document.getElementById('identityScreen').style.display = 'block';
+  currentSurvey = null;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Scale buttons
+document.querySelectorAll('.scale-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    const s = this.dataset.scale;
+    const v = this.dataset.v;
+    scaleVals[s] = v;
+    document.querySelectorAll(`[data-scale="${s}"]`).forEach(b => b.classList.remove('active'));
+    this.classList.add('active');
+    const type = s.startsWith('d') ? 'donor' : 'admin';
+    const cardId = config[type].scaleMap[s];
+    if (cardId) markAnswered(type, cardId);
+    updateProgress(type);
+  });
+});
+
+// Radio / Checkbox
+document.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(inp => {
+  inp.addEventListener('change', function() {
+    const name = this.name;
+    const type = name.startsWith('d') ? 'donor' : 'admin';
+    const cardId = config[type].radioCheckMap(name);
+
+    if (this.type === 'radio') {
+      document.querySelectorAll(`input[name="${name}"]`).forEach(s => s.closest('.opt-label').classList.remove('selected'));
+      this.closest('.opt-label').classList.add('selected');
+      markAnswered(type, cardId);
+    } else {
+      if (this.checked) this.closest('.opt-label').classList.add('selected');
+      else this.closest('.opt-label').classList.remove('selected');
+      const checked = document.querySelectorAll(`input[name="${name}"]:checked`).length;
+      if (checked > 0) markAnswered(type, cardId);
+      else unmarkAnswered(type, cardId);
+    }
+    updateProgress(type);
+  });
+});
+
+// Textareas
+['donor','admin'].forEach(type => {
+  const cfg = config[type];
+  const ta = document.querySelector(`textarea[name="${cfg.textareaName}"]`);
+  if (ta) {
+    ta.addEventListener('input', function() {
+      if (this.value.trim().length > 0) markAnswered(type, cfg.textareaCard);
+      else unmarkAnswered(type, cfg.textareaCard);
+      updateProgress(type);
+    });
+  }
+});
+
+function markAnswered(type, cardId) {
+  answered[type].add(cardId);
+  const el = document.getElementById(cardId);
+  if (el) el.classList.add('answered');
+}
+function unmarkAnswered(type, cardId) {
+  answered[type].delete(cardId);
+  const el = document.getElementById(cardId);
+  if (el) el.classList.remove('answered');
+}
+function updateProgress(type) {
+  const cfg = config[type];
+  const count = answered[type].size;
+  const pct = Math.round((count / cfg.total) * 100);
+  document.getElementById(cfg.progressBar).style.width = pct + '%';
+  document.getElementById(cfg.progressText).textContent = `${count} / ${cfg.total} 題`;
+}
+
+function submitSurvey(type) {
+  const cfg = config[type];
+  let missing = false;
+
+  cfg.required.forEach(q => {
+    const isScale = cfg.scaleMap && cfg.scaleMap[q];
+    const cardId = isScale ? cfg.scaleMap[q] : cfg.radioCheckMap(q);
+    const isAnswered = answered[type].has(cardId) || scaleVals[q];
+    if (!isAnswered) {
+      missing = true;
+      const el = document.getElementById(cardId);
+      if (el) {
+        el.style.borderColor = '#b03030';
+        setTimeout(() => { el.style.borderColor = ''; }, 2000);
+      }
+    }
+  });
+
+  if (missing) {
+    alert('請完成所有標示「*」的必填題目後再提交。');
+    return;
+  }
+
+  document.getElementById(type === 'donor' ? 'donorSurvey' : 'adminSurvey').classList.remove('active');
+  document.getElementById('thankyou').classList.add('show');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
